@@ -1,23 +1,37 @@
 ---
-- name: Run the playbook
-  hosts: artifactory
+- name: Deploy Docker services
+  hosts: localhost
   gather_facts: false
-  vars:
-    services:
-      db:
+
+  tasks:
+    - name: Create Docker network
+      docker_network:
+        name: artifactorynet
+
+    - name: Create volume for artifactory_data
+      docker_volume:
+        name: artifactory_data
+
+    - name: Create volume for postgresql_data
+      docker_volume:
+        name: postgresql_data
+
+    - name: Start db container
+      docker_container:
+        name: db
         image: postgres
-        container_name: db
+        state: started
+        restart_policy: always
+        networks:
+          - name: artifactorynet
         ports:
           - "172.31.76.255:5432:5432"
-        networks:
-          - artifactorynet
         environment:
-          - POSTGRES_DB=jfrogdb
-          - POSTGRES_USER=artifactory
-          - POSTGRES_PASSWORD=artifactorypassword
+          POSTGRES_DB: jfrogdb
+          POSTGRES_USER: artifactory
+          POSTGRES_PASSWORD: artifactorypassword
         volumes:
           - /data/postgresql:/var/lib/postgresql/data
-        restart: always
         ulimits:
           nproc: 65535
           nofile:
@@ -31,35 +45,26 @@
             reservations:
               cpus: '0.0001'
               memory: 20M
-      artifactory:
+
+    - name: Start artifactory container
+      docker_container:
+        name: artifactory
         image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.55.13
-        expose:
-          - 8081
-          - 8082
-        container_name: artifactory
+        state: started
+        restart_policy: always
+        networks:
+          - name: artifactorynet
         ports:
           - "172.31.76.255:8081:8081"
           - "172.31.76.255:8082:8082"
-        networks:
-          - artifactorynet
-        depends_on:
-          - db
-        links:
-          - db
+        environment:
+          JF_SHARED_DATABASE_TYPE: postgresql
+          JF_SHARED_DATABASE_USERNAME: artifactory
+          JF_SHARED_DATABASE_PASSWORD: artifactorypassword
+          JF_SHARED_DATABASE_URL: jdbc:postgresql://db:5432/jfrogdb
+          JF_SHARED_DATABASE_DRIVER: org.postgresql.Driver
         volumes:
           - artifactory_data:/var/opt/jfrog/artifactory
-          - ./master.key:/var/opt/jfrog/artifactory/var/etc/security/master.key
-        environment:
-          - DB_TYPE=postgresql
-          - DB_USER=artifactory
-          - DB_PASSWORD=password
-          - JF_SHARED_DATABASE_TYPE=postgresql
-          - JF_SHARED_DATABASE_USERNAME=artifactory
-          - JF_SHARED_DATABASE_PASSWORD=artifactorypassword
-          - JF_SHARED_DATABASE_URL=jdbc:postgresql://db:5432/jfrogdb
-          - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
-          - EXTRA_JAVA_OPTIONS=-Xms512m -Xmx4g
-        restart: always
         ulimits:
           nproc: 65535
           nofile:
@@ -70,12 +75,10 @@
             limits:
               cpus: '2'
               memory: 2148M
-            reservations:
-              cpus: '0.0001'
-              memory: 20M
-  tasks:
-  - name: Deploy Artifactory
-    community.docker.docker_compose:
-      project_name: artifactory
-      project_src: .
-      state: present
+
+networks:
+  - name: artifactorynet
+
+volumes:
+  artifactory_data:
+  postgresql_data:
