@@ -4,6 +4,9 @@
   gather_facts: false
 
   tasks:
+    - name: Install docker-py
+      pip:
+        name: docker-py
     - name: Create Docker network
       docker_network:
         name: artifactorynet
