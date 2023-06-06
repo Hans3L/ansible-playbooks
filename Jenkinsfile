@@ -2,18 +2,18 @@
 
 pipeline {
     agent { label 'linux' }
-    /*environment {
+    environment {
         ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
-    }*/
+    }
     parameters {
-        choice(name: 'ANSIBLE_PRIVATE_KEY',
+        /*choice(name: 'ANSIBLE_PRIVATE_KEY',
                 'choices': [
                         'carvajaldev-private-key',
                         'America/Asuncion',
                         'America/Bogota',
                         'America/La_Paz'
                 ],
-                description: 'Key private aws')
+                description: 'Key private aws')*/
         choice(name: 'PLAYBOOKS',
                 'choices': [
                         'assets/playbooks/message.yml',
