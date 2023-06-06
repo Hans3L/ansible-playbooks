@@ -1,7 +1,0 @@
-#Carvajal Bancosol Artifactory dev
-[dev]
-#172.31.70.48 ansible_user=ubuntu ansible_ssh_port=22
-172.31.76.86 ansible_user=ubuntu ansible_ssh_port=22
-
-[artifactory]
-172.31.76.255 ansible_user=ubuntu ansible_ssh_port=22
