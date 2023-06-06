@@ -28,7 +28,7 @@ pipeline {
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     writeFile file: "./Dockerfile", text: dockerfilehttp //fix dockerfile
                     def playbookPath = libraryResource('assets/playbooks/message.yml')
-                    sh 'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" ${playbookPath}'
+                    sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" ${playbookPath}'"""
                 }
             }
         }
