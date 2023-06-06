@@ -4,6 +4,10 @@
   gather_facts: false
 
   tasks:
+    - name: Install pip
+      raw: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py --user
+      become: true
+
     - name: Install docker-py
       pip:
         name: docker-py
