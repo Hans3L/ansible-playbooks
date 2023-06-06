@@ -1,6 +1,6 @@
 ---
 - name: Deploy Docker services
-  hosts: localhost
+  hosts: artifactory
   gather_facts: false
 
   tasks:
@@ -75,10 +75,3 @@
             limits:
               cpus: '2'
               memory: 2148M
-
-networks:
-  - name: artifactorynet
-
-volumes:
-  artifactory_data:
-  postgresql_data:
