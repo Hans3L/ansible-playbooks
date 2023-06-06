@@ -74,8 +74,8 @@
               cpus: '0.0001'
               memory: 20M
   tasks:
-    - name: Deploy Artifactory
-      community.docker.docker_compose:
-        project_name: artifactory
-        project_src: .
-        state: present
+  - name: Deploy Artifactory
+    community.docker.docker_compose:
+      project_name: artifactory
+      project_src: .
+      state: present
