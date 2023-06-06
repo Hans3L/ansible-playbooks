@@ -3,11 +3,11 @@
   gather_facts: false
   hosts: dev
   tasks:
-    - name: Get the username running this playbook
-      become: false
-      command: whoami
-      register: username_on_the_host
+  - name: Get the username running this playbook
+    become: false
+    command: whoami
+    register: username_on_the_host
 
-    - name: Display the User name
-      debug:
-        msg: "Hello User {{ username_on_the_host.stdout }} from Jenkins and Ansible!!"
+  - name: Display the User name
+    debug:
+      msg: "Hello User {{ username_on_the_host.stdout }} from Jenkins and Ansible!!"
