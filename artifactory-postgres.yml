@@ -9,8 +9,8 @@
       become: true
 
     - name: Install docker-py
-      pip:
-        name: docker-py
+      command: pip install docker-py
+      become: true
 
     - name: Create Docker network
       docker_network:
