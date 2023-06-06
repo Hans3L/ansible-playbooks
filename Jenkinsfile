@@ -25,6 +25,7 @@ pipeline {
             steps {
                 script {
                     sh 'ansible-galaxy collection install -r requirements.yml'
+                    sh 'ls'
                     def playbookPath = libraryResource('assets/playbooks/message.yml')
                     sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
                 }
