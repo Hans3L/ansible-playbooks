@@ -3,9 +3,9 @@
 def dockerfilehttp = libraryResource 'assets/Dockerfile'
 pipeline {
     agent { label 'linux' }
-    environment {
+    //environment {
         //ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
-    }
+   // }
     parameters {
         choice(name: 'ANSIBLE_PRIVATE_KEY',
                 'choices': [
