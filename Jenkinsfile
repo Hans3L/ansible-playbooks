@@ -5,6 +5,7 @@ def PRIVATE_KEY
 pipeline {
     agent { label 'linux' }
     environment {
+        //ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
         ANSIBLE_PRIVATE_KEY = credentials("${params.ANSIBLE_PKEY}")
     }
     parameters {
@@ -34,7 +35,7 @@ pipeline {
                     writeFile file: "./playbook.yml", text: playbookPath
                     //sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
                     //sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
-                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$PRIVATE_KEY -e 'key=$ANSIBLE_PRIVATE_KEY' playbook.yml"
+                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
                 }
             }
         }
