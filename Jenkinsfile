@@ -18,6 +18,7 @@ pipeline {
         choice(name: 'PLAYBOOKS',
                 'choices': [
                         'assets/playbooks/message.yml',
+                        'assets/playbooks/install-nginx-docker.yml',
                         'assets/playbooks/executor.yml'
                 ], description: 'Choose ansible playbooks')
     }
