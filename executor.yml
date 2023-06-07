@@ -1,0 +1,8 @@
+---
+- name: Run the test playbook
+  gather_facts: false
+  hosts: artifactory
+  become: true
+  tasks:
+  - name: Run Docker Compose file
+    shell: docker-compose up -d
