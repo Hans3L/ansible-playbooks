@@ -5,7 +5,7 @@ def PRIVATE_KEY
 pipeline {
     agent { label 'linux' }
     environment {
-        ANSIBLE_PRIVATE_KEY = credentials('ANSIBLE_PKEY')
+        ANSIBLE_PRIVATE_KEY = credentials(ANSIBLE_PKEY)
     }
     parameters {
         choice(name: 'ANSIBLE_PKEY',
