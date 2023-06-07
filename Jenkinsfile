@@ -1,8 +1,7 @@
 @Library('jenkins-library@master') _
 
 def PLAYBOOK_TARGET
-def playbookhttp = libraryResource 'assets/Dockerfile'
-def playbookContent = libraryResource 'assets/playbooks/message.yml'
+
 pipeline {
     agent { label 'linux' }
     environment {
@@ -21,19 +20,19 @@ pipeline {
         choice(name: 'PLAYBOOKS',
                 'choices': [
                         'assets/playbooks/message.yml',
-                        'Bancosol-dev'
+                        'assets/playbooks/executor.yml'
                 ], description: 'Choose ansible playbooks')
     }
     stages {
         stage('Run Playbook') {
             steps {
                 script {
-                    //PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
-                    //TIMEZONE_PROJECT = "${params.TIMEZONE}"
+                    PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
+                    //def playbookContent = libraryResource 'assets/playbooks/message.yml'
                     def playbookPath = libraryResource('assets/playbooks/message.yml')
-                    writeFile file: "./playbook.yml", text: playbookContent
+                    writeFile file: "./playbook.yml", text: PLAYBOOK_TARGET
                     //sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
                     sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
                 }
