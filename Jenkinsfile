@@ -1,7 +1,7 @@
 @Library('jenkins-library@master') _
 
 def PLAYBOOK_TARGET
-
+def PRIVATE_KEY
 pipeline {
     agent { label 'linux' }
     environment {
@@ -25,6 +25,7 @@ pipeline {
             steps {
                 script {
                     PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
+                    PRIVATE_KEY = "${params.ANSIBLE_PRIVATE_KEY}"
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
                     //def playbookContent = libraryResource 'assets/playbooks/message.yml'
@@ -32,7 +33,8 @@ pipeline {
                     def playbookPath = libraryResource(PLAYBOOK_TARGET)
                     writeFile file: "./playbook.yml", text: playbookPath
                     //sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
-                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
+                    //sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
+                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
                 }
             }
         }
