@@ -33,9 +33,9 @@ pipeline {
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
                     def playbookPath = libraryResource('assets/playbooks/message.yml')
-                    writeFile file: PLAYBOOK_TARGET, text: playbookContent
+                    writeFile file: './playbooks.yml ', text: playbookContent
                     //sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
-                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' $PLAYBOOK_TARGET"
+                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbooks.yml"
                 }
             }
         }
