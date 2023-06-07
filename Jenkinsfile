@@ -6,8 +6,8 @@ def playbookContent = libraryResource 'assets/playbooks/message.yml'
 pipeline {
     agent { label 'linux' }
     environment {
-        //ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
-        ANSIBLE_PRIVATE_KEY = credentials('artifactorydev-private-key')
+        ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
+        //ANSIBLE_PRIVATE_KEY = credentials('artifactorydev-private-key')
     }
     parameters {
         /*choice(name: 'ANSIBLE_PRIVATE_KEY',
