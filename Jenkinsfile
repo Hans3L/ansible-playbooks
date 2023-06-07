@@ -28,7 +28,7 @@ pipeline {
         stage('Run Playbook') {
             steps {
                 script {
-                    PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
+                    //PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
                     //TIMEZONE_PROJECT = "${params.TIMEZONE}"
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
