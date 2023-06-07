@@ -5,10 +5,10 @@ def PRIVATE_KEY
 pipeline {
     agent { label 'linux' }
     environment {
-        ANSIBLE_PRIVATE_KEY = credentials('ANSIBLE_PRIVATE_KEY')
+        ANSIBLE_PRIVATE_KEY = credentials('ANSIBLE_PKEY')
     }
     parameters {
-        choice(name: 'ANSIBLE_PRIVATE_KEY',
+        choice(name: 'ANSIBLE_PKEY',
                 'choices': [
                         'carvajaldev-private-key',
                         'artifactorydev-private-key'
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
-                    PRIVATE_KEY = "${params.ANSIBLE_PRIVATE_KEY}"
+                    PRIVATE_KEY = "${params.ANSIBLE_PKEY}"
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
                     //def playbookContent = libraryResource 'assets/playbooks/message.yml'
