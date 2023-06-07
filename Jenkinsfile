@@ -5,18 +5,15 @@ def PLAYBOOK_TARGET
 pipeline {
     agent { label 'linux' }
     environment {
-        ANSIBLE_PRIVATE_KEY = credentials('carvajaldev-private-key')
-        //ANSIBLE_PRIVATE_KEY = credentials('artifactorydev-private-key')
+        ANSIBLE_PRIVATE_KEY = credentials('ANSIBLE_PRIVATE_KEY')
     }
     parameters {
-        /*choice(name: 'ANSIBLE_PRIVATE_KEY',
+        choice(name: 'ANSIBLE_PRIVATE_KEY',
                 'choices': [
                         'carvajaldev-private-key',
-                        'America/Asuncion',
-                        'America/Bogota',
-                        'America/La_Paz'
+                        'artifactorydev-private-key'
                 ],
-                description: 'Key private aws')*/
+                description: 'Key private aws')
         choice(name: 'PLAYBOOKS',
                 'choices': [
                         'assets/playbooks/message.yml',
