@@ -21,8 +21,8 @@ pipeline {
                 description: 'Key private aws')
         choice(name: 'INVENTORY',
                 'choices': [
-                        'dev.hosts',
-                        'carvajalprd.hosts'
+                        'inventory/dev.hosts',
+                        'inventory/carvajalprd.hosts'
                 ],
                 description: 'Key private aws')
         choice(name: 'PLAYBOOKS',
