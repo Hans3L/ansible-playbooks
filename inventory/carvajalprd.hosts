@@ -1,15 +1,15 @@
 #jenkins carvajal qa prd
 [jenkins]
-10.8.0.18 ansible_user=ubuntu ansible_ssh_port=22
+10.8.0.18 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
 
 #artifactory carvajal prd
 [artifactory]
-10.8.0.15 ansible_user=ubuntu ansible_ssh_port=22
+10.8.0.15 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
 
 #registry carvajal prd
 [registry]
-10.8.0.4 ansible_user=ubuntu ansible_ssh_port=22
+10.8.0.4 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
 
 #web3 prd
 [webhcenterprd]
-10.8.0.52 ansible_user=ubuntu ansible_ssh_port=22
+10.8.0.52 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
