@@ -13,7 +13,10 @@ pipeline {
         choice(name: 'ANSIBLE_PKEY',
                 'choices': [
                         'carvajaldev-private-key',
-                        'artifactorydev-private-key'
+                        'artifactorydev-private-key',
+                        'carvajalartifactory-private-key',
+                        'carvajalregistry-private-key',
+                        'carvajaljenkins-private-key'
                 ],
                 description: 'Key private aws')
         choice(name: 'INVENTORY',
