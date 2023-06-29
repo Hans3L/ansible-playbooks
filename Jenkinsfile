@@ -2,6 +2,7 @@
 
 def PLAYBOOK_TARGET
 def PRIVATE_KEY
+def ANSIBLE_INVENTORY
 pipeline {
     agent { label 'linux' }
     environment {
@@ -13,6 +14,12 @@ pipeline {
                 'choices': [
                         'carvajaldev-private-key',
                         'artifactorydev-private-key'
+                ],
+                description: 'Key private aws')
+        choice(name: 'INVENTORY',
+                'choices': [
+                        'dev.hosts',
+                        'carvajalprd.hosts'
                 ],
                 description: 'Key private aws')
         choice(name: 'PLAYBOOKS',
@@ -28,6 +35,7 @@ pipeline {
                 script {
                     PLAYBOOK_TARGET = "${params.PLAYBOOKS}"
                     PRIVATE_KEY = "${params.ANSIBLE_PKEY}"
+                    ANSIBLE_INVENTORY = "${params.INVENTORY}"
                     sh 'ansible-galaxy collection install -r requirements.yml'
                     sh 'ls'
                     //def playbookContent = libraryResource 'assets/playbooks/message.yml'
@@ -36,7 +44,8 @@ pipeline {
                     writeFile file: "./playbook.yml", text: playbookPath
                     //sh """'cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e "key=/home/ubuntu/.ssh/id_rsa.pub" message.yml'"""
                     //sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
-                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
+                    //sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i inventory/dev.hosts --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
+                    sh "cd ${WORKSPACE} && sudo ansible-playbook --user ubuntu -i $ANSIBLE_INVENTORY --private-key=$ANSIBLE_PRIVATE_KEY -e 'key=$PATH_SSH_PUB' playbook.yml"
                 }
             }
         }
