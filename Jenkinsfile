@@ -21,12 +21,13 @@ pipeline {
                 description: 'Key private aws')
         choice(name: 'INVENTORY',
                 'choices': [
-                        'inventory/dev.hosts',
-                        'inventory/carvajalprd.hosts'
+                        'inventory/develop/dev.hosts',
+                        'inventory/production/carvajalprd.hosts'
                 ],
                 description: 'Key private aws')
         choice(name: 'PLAYBOOKS',
                 'choices': [
+                        'assets/playbooks/hostname.yml',
                         'assets/playbooks/message.yml',
                         'assets/playbooks/install-nginx-docker.yml',
                         'assets/playbooks/executor.yml'
