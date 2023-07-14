@@ -32,7 +32,7 @@ pipeline {
                         'assets/playbooks/hostname.yml',
                         'assets/playbooks/message.yml',
                         'assets/playbooks/install-nginx-docker.yml',
-                        'assets/playbooks/execution-docker-compose.yml',
+                        'assets/playbooks/exec-dc-sonar-postgres.yml',
                         'assets/playbooks/exec-dc-jfrog-postgres.yml',
                         'assets/playbooks/executor.yml'
                 ], description: 'Choose ansible playbooks')
