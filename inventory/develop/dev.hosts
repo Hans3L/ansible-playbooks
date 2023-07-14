@@ -6,3 +6,7 @@
 #artifactory desa
 [artifactory]
 172.31.66.242 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
+
+#jenkins desa
+[jenkins]
+172.31.78.200 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
