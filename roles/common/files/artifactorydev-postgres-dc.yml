@@ -1,0 +1,87 @@
+version: '3'
+services:
+  artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:7.55.13
+    expose:
+      - 8081
+    container_name: artifactory
+    ports:
+      - "172.31.66.242:8081:8081"
+      - "172.31.66.242:8082:8082"
+    networks:
+      - artifactorynet
+      #depends_on:
+      #- postgresql
+      #links:
+      #- postgresql
+    volumes:
+      - artifactory_data:/var/opt/jfrog/artifactory
+      # - ./master.key:/var/opt/jfrog/artifactory/var/etc/security/master.key
+    environment:
+      # - DB_TYPE=postgresql
+      # The following must match the POSTGRES_USER and POSTGRES_PASSWORD values passed to PostgreSQL
+      # - DB_USER=artifactory
+      # - DB_PASSWORD=password
+      - JF_SHARED_DATABASE_TYPE=postgresql
+      - JF_SHARED_DATABASE_USERNAME=artifactory
+      - JF_SHARED_DATABASE_PASSWORD=artifactorypassword
+      - JF_SHARED_DATABASE_URL=jdbc:postgresql://postgresql:5432/postgres
+      - JF_SHARED_DATABASE_DRIVER=org.postgresql.Driver
+
+      # Add extra Java options by uncommenting the following line
+      #- EXTRA_JAVA_OPTIONS=-Xms512m -Xmx4g
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2148M
+          #reservations:
+          #cpus: '0.0001'
+          #memory: 20M
+
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    ports:
+      - "172.31.66.242:5432:5432"
+    networks:
+      - artifactorynet
+    environment:
+      - POSTGRES_DB=postgres
+      # The following must match the DB_USER and DB_PASSWORD values passed to Artifactory
+      - POSTGRES_USER=artifactory
+      - POSTGRES_PASSWORD=artifactorypassword
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+
+      # - postgresql:/var/lib/postgresql
+      # - postgresql_data:/var/lib/postgresql/data
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+          #reservations:
+          #cpus: '0.0001'
+          #memory: 20M
+
+networks:
+  artifactorynet:
+
+volumes:
+  artifactory_data:
+  postgresql:
+  postgresql_data:
