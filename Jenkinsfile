@@ -16,7 +16,8 @@ pipeline {
                         'artifactorydev-private-key',
                         'carvajalartifactory-private-key',
                         'carvajalregistry-private-key',
-                        'carvajaljenkins-private-key'
+                        'carvajaljenkins-private-key',
+                        'Jenkins-desa'
                 ],
                 description: 'Key private aws')
         choice(name: 'INVENTORY',
