@@ -17,6 +17,7 @@ pipeline {
                         'carvajalartifactory-private-key',
                         'carvajalregistry-private-key',
                         'carvajaljenkins-private-key',
+                        'sonarqubedev-private-key',
                         'Jenkins-desa'
                 ],
                 description: 'Key private aws')
@@ -31,6 +32,7 @@ pipeline {
                         'assets/playbooks/hostname.yml',
                         'assets/playbooks/message.yml',
                         'assets/playbooks/install-nginx-docker.yml',
+                        'assets/playbooks/execution-docker-compose.yml',
                         'assets/playbooks/executor.yml'
                 ], description: 'Choose ansible playbooks')
     }

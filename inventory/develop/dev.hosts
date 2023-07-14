@@ -10,3 +10,7 @@
 #jenkins desa
 [jenkins]
 172.31.78.200 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
+
+#soanrqube desa
+[sonar]
+172.31.86.110 ansible_user=ubuntu ansible_ssh_port=22 ansible_python_interpreter=/usr/bin/python3
