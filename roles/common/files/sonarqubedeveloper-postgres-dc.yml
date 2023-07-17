@@ -10,7 +10,7 @@ services:
     networks:
       - sonarnet
     environment:
-      #- POSTGRES_DB=sonar
+      - POSTGRES_DB=db
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
     volumes:
