@@ -36,6 +36,7 @@ pipeline {
                         'assets/playbooks/exec-dc-jfrog-postgres.yml',
                         'assets/playbooks/install-python3-pip3-docker.yml',
                         'assets/playbooks/directory-docker-sock.yml',
+                        'assets/playbooks/restart-nginx.yml',
                         'assets/playbooks/executor.yml'
                 ], description: 'Choose ansible playbooks')
     }
